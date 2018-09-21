@@ -1,0 +1,20 @@
+{
+  "folders": [
+    {
+      "key": "c3b3b68a48cc12e650fc",
+      "color": "#1278BD",
+      "name": "Default"
+    },
+    {
+      "key": "37859a490b6d0f1fcbd6",
+      "color": "#B013A4",
+      "name": "python_utils"
+    },
+    {
+      "key": "66e912a8a3ebb823eaf4",
+      "color": "#E8D252",
+      "name": "server_management"
+    }
+  ],
+  "version": "1.0"
+}

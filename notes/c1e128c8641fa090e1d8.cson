@@ -1,0 +1,17 @@
+createdAt: "2018-02-05T07:39:44.675Z"
+updatedAt: "2018-09-21T07:45:47.321Z"
+type: "MARKDOWN_NOTE"
+folder: "66e912a8a3ebb823eaf4"
+title: "To connect to Window folder"
+content: '''
+  # To connect to Window folder
+  sudo mount -t cifs -o username=********,password="*******",iocharset=utf8 //URL/TO/Windows/Endpoint /media/UserMountPoint
+  
+'''
+tags: [
+  "win"
+  "linux"
+  "server"
+]
+isStarred: false
+isTrashed: false

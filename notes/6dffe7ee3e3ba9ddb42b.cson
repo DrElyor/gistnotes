@@ -1,0 +1,23 @@
+createdAt: "2018-02-05T09:08:56.588Z"
+updatedAt: "2018-09-21T07:45:02.732Z"
+type: "SNIPPET_NOTE"
+folder: "37859a490b6d0f1fcbd6"
+title: "CamelCase to snake_case"
+description: "CamelCase to snake_case"
+snippets: [
+  {
+    name: "camel2snake.py"
+    mode: "Python"
+    content: '''
+      def camel2snake(name):
+          s1 = re.sub('(.)([A-Z][a-z]+)', r'\\1_\\2', name)
+          return re.sub('([a-z0-9])([A-Z])', r'\\1_\\2', s1).lower()
+    '''
+  }
+]
+tags: [
+  "python"
+  "string"
+]
+isStarred: false
+isTrashed: false
