@@ -1,0 +1,81 @@
+createdAt: "2018-09-21T07:54:27.974Z"
+updatedAt: "2018-09-21T08:00:54.505Z"
+type: "SNIPPET_NOTE"
+folder: "24cd1938f66bd85d060d"
+title: "Soft delete for a model"
+description: '''
+  Soft delete for a model
+  src=https://medium.com/@adriennedomingus/soft-deletion-in-django-e4882581c340
+'''
+snippets: [
+  {
+    name: "sofy_delete_model.py"
+    mode: "Python"
+    content: '''
+      class SoftDeletionManager(models.Manager):
+          """ Manage action on the soft delete model.
+              Initialize with alive_only set to True by default, unless instantiated the manager with that in the kwargs
+      
+          """
+      
+          def __init__(self, *args, **kwargs):
+              self.alive_only = kwargs.pop('alive_only', True)
+              super(SoftDeletionManager, self).__init__(*args, **kwargs)
+      
+          def get_queryset(self):
+              if self.alive_only:
+                  return SoftDeletionQuerySet(self.model).filter(deleted_at=None)
+              return SoftDeletionQuerySet(self.model)
+      
+          def hard_delete(self):
+              return self.get_queryset().hard_delete()
+      
+      
+      class SoftDeletionModel(models.Model):
+          """Extended model to replace basic delete with soft delete
+              deleted_at: this means that all models inheriting from the SoftDeletionModel will have this attribute available to be set. 
+              By default it will be null. 
+              The delete method means that whenever .delete() is called on any object that inherits from the SoftDeletionModel, 
+              it won’t actually be deleted from the database — its deleted_at attribute will be set instead
+      
+              Hard_delete gives the option to really truly delete something from the database.
+          """
+      
+          deleted_at = models.DateTimeField(blank=True, null=True)
+      
+          objects = SoftDeletionManager()
+          all_objects = SoftDeletionManager(alive_only=False)
+      
+          class Meta:
+              abstract = True
+      
+          def delete(self):
+              self.deleted_at = timezone.now()
+              self.save()
+      
+          def hard_delete(self):
+              super(SoftDeletionModel, self).delete()
+      
+      
+      class SoftDeletionQuerySet(QuerySet):
+          def delete(self):
+              return super(SoftDeletionQuerySet, self).update(deleted_at=timezone.now())
+      
+          def hard_delete(self):
+              return super(SoftDeletionQuerySet, self).delete()
+      
+          def alive(self):
+              return self.filter(deleted_at=None)
+      
+          def dead(self):
+              return self.exclude(deleted_at=None)
+    '''
+  }
+]
+tags: [
+  "python"
+  "django"
+  "model"
+]
+isStarred: false
+isTrashed: false
