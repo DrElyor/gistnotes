@@ -1,0 +1,36 @@
+createdAt: "2018-09-21T09:54:12.588Z"
+updatedAt: "2018-09-21T09:54:35.903Z"
+type: "SNIPPET_NOTE"
+folder: "24cd1938f66bd85d060d"
+title: "Django API Permissions"
+description: "Django API Permissions"
+snippets: [
+  {
+    name: "django_permissions.py"
+    mode: "Python"
+    content: '''
+      class IsSuperUser(permissions.BasePermission):
+      
+          def has_permission(self, request, view):
+              return request.user and request.user.is_superuser
+      
+      
+      class IsUser(permissions.BasePermission):
+      
+          def has_object_permission(self, request, view, obj):
+              if request.user:
+                  if request.user.is_superuser:
+                      return True
+                  else:
+                      return obj == request.user
+              else:
+                  return False
+    '''
+  }
+]
+tags: [
+  "django"
+  "model"
+]
+isStarred: false
+isTrashed: false

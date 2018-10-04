@@ -1,0 +1,44 @@
+createdAt: "2018-10-04T12:06:41.601Z"
+updatedAt: "2018-10-04T12:36:56.510Z"
+type: "SNIPPET_NOTE"
+folder: "24cd1938f66bd85d060d"
+title: "DRF Permissions"
+description: "DRF Permissions"
+snippets: [
+  {
+    name: "drf_permissions.py"
+    mode: "Python"
+    content: '''
+      from rest_framework import permissions
+      
+      class BlacklistPermission(permissions.BasePermission):
+          """
+          Global permission check for blacklisted IPs.
+          """
+      
+          def has_permission(self, request, view):
+              ip_addr = request.META['REMOTE_ADDR']
+              blacklisted = Blacklist.objects.filter(ip_addr=ip_addr).exists()
+              return not blacklisted
+      
+      class IsOwner(permissions.BasePermission):
+          """
+          Object-level permission to only allow owners of an object to edit it.
+          Assumes the model instance has an `owner` attribute.
+          """
+      
+          def has_object_permission(self, request, view, obj):
+              # Read permissions are allowed to any request,
+              # so we'll always allow GET, HEAD or OPTIONS requests.
+              # Instance must have an attribute named `owner`.
+              return obj.owner == request.user
+    '''
+  }
+]
+tags: [
+  "django"
+  "model"
+  "permissions"
+]
+isStarred: false
+isTrashed: false

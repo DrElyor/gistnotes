@@ -1,0 +1,23 @@
+createdAt: "2018-10-03T06:59:12.165Z"
+updatedAt: "2018-10-03T07:00:21.421Z"
+type: "SNIPPET_NOTE"
+folder: "24cd1938f66bd85d060d"
+title: "Django schema in model"
+description: "Django schema in model"
+snippets: [
+  {
+    name: ""
+    mode: "Python"
+    content: '''
+      class Meta:
+              managed=True
+              db_table='"schema\\".\\"table"'
+    '''
+  }
+]
+tags: [
+  "model"
+  "db"
+]
+isStarred: false
+isTrashed: false

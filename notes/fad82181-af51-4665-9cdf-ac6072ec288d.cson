@@ -1,0 +1,36 @@
+createdAt: "2018-10-04T13:30:50.262Z"
+updatedAt: "2018-10-04T13:31:18.752Z"
+type: "SNIPPET_NOTE"
+folder: "24cd1938f66bd85d060d"
+title: "Extend usermodel with profile"
+description: "Extend usermodel with profile"
+snippets: [
+  {
+    name: "profile.py"
+    mode: "Python"
+    content: '''
+      from django.db import models
+      from django.contrib.auth.models import User
+      from django.db.models.signals import post_save
+      from django.dispatch import receiver
+      
+      class Profile(models.Model):
+          user = models.OneToOneField(User, on_delete=models.CASCADE)
+          bio = models.TextField(max_length=500, blank=True)
+          location = models.CharField(max_length=30, blank=True)
+          birth_date = models.DateField(null=True, blank=True)
+      
+      @receiver(post_save, sender=User)
+      def create_user_profile(sender, instance, created, **kwargs):
+          if created:
+              Profile.objects.create(user=instance)
+      
+      @receiver(post_save, sender=User)
+      def save_user_profile(sender, instance, **kwargs):
+          instance.profile.save()
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false
