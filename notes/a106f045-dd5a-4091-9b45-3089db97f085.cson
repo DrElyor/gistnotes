@@ -1,0 +1,27 @@
+createdAt: "2018-10-09T13:29:09.425Z"
+updatedAt: "2018-10-09T13:30:43.135Z"
+type: "SNIPPET_NOTE"
+folder: "37859a490b6d0f1fcbd6"
+title: "Create temporary dir to process"
+description: "Create temporary dir to process"
+snippets: [
+  {
+    name: ""
+    mode: "Python"
+    content: '''
+      with tempfile.TemporaryDirectory() as tmpdirname:
+          print('created temporary directory', tmpdirname)
+          shutil.copy("sm-ailogo.png",tmpdirname)
+          print('copy data in temporary directory')
+          img=cv2.imread(tmpdirname+"/sm-ailogo.png")
+          out=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+          cv2.imwrite(tmpdirname+"/gray.png",out)
+          print("save data")
+          shutil.copy(tmpdirname+"/gray.png",".")
+          print("remove all")
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

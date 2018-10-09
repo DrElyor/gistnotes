@@ -1,9 +1,9 @@
 createdAt: "2018-09-21T09:51:52.992Z"
-updatedAt: "2018-09-21T09:52:29.990Z"
+updatedAt: "2018-10-09T13:14:00.465Z"
 type: "SNIPPET_NOTE"
 folder: "24cd1938f66bd85d060d"
-title: "UUID Primary key"
-description: "UUID Primary key"
+title: "Model UUID Primary key"
+description: "Model UUID Primary key"
 snippets: [
   {
     name: ""

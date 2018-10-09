@@ -1,0 +1,49 @@
+createdAt: "2018-10-09T13:17:36.717Z"
+updatedAt: "2018-10-09T13:18:52.386Z"
+type: "SNIPPET_NOTE"
+folder: "24cd1938f66bd85d060d"
+title: "Celery task definition"
+description: "Celery task definition"
+snippets: [
+  {
+    name: "task.py"
+    mode: "Python"
+    content: '''
+      from celery import shared_task
+      from celery.exceptions import TimeoutError
+      from celery.result import AsyncResult
+      
+      from django.conf import settings
+      from django.db.models import Max, Min
+      from django.core.files import File
+      
+      from project.app.models import Model
+      
+      @shared_task()
+      def compute_task(model_uuid):
+          logger.info("Computing thumbnail for {}".format(model_uuid))
+          try:
+              obj = Model.objects.get(uuid=model_uuid)
+              file_url = settings.MEDIA_ROOT+'/'+str(obj.media)
+              file_suffix = Path(file_url).suffix
+              file_stem=Path(file_url).stem
+              
+              out_file_url = file_stem+"_thumb"+file_suffix
+      
+              img = cv2.imread(file_url)
+              thumb = cv2.resize(img,(200,200))
+              f = tempfile.NamedTemporaryFile(suffix=file_suffix)
+              cv2.imwrite(f.name,thumb)
+              obj.thumbnail.save(out_file_url, File(f))
+              f.close()
+              logger.info("Compute thumbnail done for {}".format(model_uuid))
+              return True
+          except Exception as e:
+              logger.error("Failed thumbnail {}, {}".format(model_uuid,e))
+              return False
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

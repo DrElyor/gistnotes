@@ -1,0 +1,44 @@
+createdAt: "2018-10-08T07:53:28.507Z"
+updatedAt: "2018-10-08T07:55:49.343Z"
+type: "SNIPPET_NOTE"
+folder: "3712968176bb52103079"
+title: "NGINX base template"
+description: "NGINX base template "
+snippets: [
+  {
+    name: ""
+    mode: "Nginx"
+    content: '''
+      server {
+          # the port your site will be served on
+          listen      8000;
+          # the domain name it will serve for
+          server_name 10.40.24.33; # substitute your machine's IP address or FQDN
+          charset     utf-8;
+      
+          # max upload size
+          client_max_body_size 75M;   # adjust to taste
+      
+          # Django media
+          location /media {
+             alias /../media; # your Django project's static files - amend as required
+          }
+      
+          location /static {
+              alias /../static; # your Django project's static files - amend as required
+          }
+      
+          # Finally, send all non-media requests to the Django server.
+          location / {
+              proxy_pass http://127.0.0.1:8008;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          }
+      }
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

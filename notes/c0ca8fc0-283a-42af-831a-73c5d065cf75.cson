@@ -1,0 +1,31 @@
+createdAt: "2018-10-08T07:55:55.327Z"
+updatedAt: "2018-10-08T07:57:04.228Z"
+type: "SNIPPET_NOTE"
+folder: "3712968176bb52103079"
+title: "NGINX template for docker"
+description: "NGINX template for docker"
+snippets: [
+  {
+    name: ""
+    mode: "Nginx"
+    content: '''
+      
+      upstream web {
+        ip_hash;
+        server web:8000;
+      }
+      
+      # portal
+      server {
+        location / {
+              proxy_pass http://web/;
+          }
+        listen 80;
+        server_name 10.40.24.33;
+      }
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

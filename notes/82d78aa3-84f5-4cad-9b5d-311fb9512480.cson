@@ -1,0 +1,89 @@
+createdAt: "2018-10-09T13:07:20.172Z"
+updatedAt: "2018-10-09T13:17:30.401Z"
+type: "SNIPPET_NOTE"
+folder: "24cd1938f66bd85d060d"
+title: "Celery add to project"
+description: "Celery add to project"
+snippets: [
+  {
+    name: "celery.py"
+    mode: "Python"
+    content: '''
+      import os
+      import celery
+      from celery import Celery
+      from django.conf import settings
+      # set the default Django settings module for the 'celery' program.
+      
+      ## In settings set variable where celery should look at celery settings for the project
+      ## ex: CELERY_SETTINGS= 'project.settings'
+      ## ex: CELERY_APP= 'project'
+      
+      SETTINGS=settings.CELERY_SETTINGS
+      APP=settings.CELERY_APP
+      
+      os.environ.setdefault('DJANGO_SETTINGS_MODULE', SETTINGS)
+      
+      app = Celery(APP)
+      
+      # Using a string here means the worker don't have to serialize
+      # the configuration object to child processes.
+      # - namespace='CELERY' means all celery-related configuration keys
+      #   should have a `CELERY_` prefix.
+      
+      app.config_from_object('django.conf:settings',namespace='CELERY')
+      # Load task modules from all registered Django app configs.
+      app.autodiscover_tasks()
+      
+      #@app.task(bind=True)
+      #def debug_task(self):
+      #    print('Request: {0!r}'.format(self.request))
+    '''
+  }
+  {
+    name: "celery_settings.py"
+    mode: "Python"
+    content: '''
+      #======================================================================
+      #    ______     __
+      #   / ____/__  / /__  _______  __
+      #  / /   / _ \\/ / _ \\/ ___/ / / /
+      # / /___/  __/ /  __/ /  / /_/ /
+      # \\____/\\___/_/\\___/_/   \\__, /
+      #                       /____/
+      #
+      # For Windows beat doesn't use normal namespace
+      #======================================================================
+      CELERY_APP=''
+      CELERY_SETTINGS=''
+      if USE_TZ:
+          # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-timezone
+          CELERY_TIMEZONE = TIME_ZONE
+      # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-broker_url
+      CELERY_BROKER_URL = env('CELERY_BROKER_URL')
+      # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_backend
+      CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+      # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-accept_content
+      CELERY_ACCEPT_CONTENT = ['json']
+      # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-task_serializer
+      CELERY_TASK_SERIALIZER = 'json'
+      # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_serializer
+      CELERY_RESULT_SERIALIZER = 'json'
+      # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-time-limit
+      ## TODO: set to whatever value is adequate in your circumstances
+      #CELERYD_TASK_TIME_LIMIT = 5 * 60
+      # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-soft-time-limit
+      ## TODO: set to whatever value is adequate in your circumstances
+      #CELERYD_TASK_SOFT_TIME_LIMIT = 60
+      # CELERY_TASK_ALWAYS_EAGER = True
+      # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-eager-propagates
+      # CELERY_TASK_EAGER_PROPAGATES = True
+    '''
+  }
+]
+tags: [
+  "django"
+  "celery"
+]
+isStarred: false
+isTrashed: false

@@ -1,0 +1,29 @@
+createdAt: "2018-10-08T09:36:35.182Z"
+updatedAt: "2018-10-09T13:14:37.990Z"
+type: "SNIPPET_NOTE"
+folder: "24cd1938f66bd85d060d"
+title: "ModelAdmin Save creator in admin interface"
+description: "ModelAdmin Save creator in admin interface"
+snippets: [
+  {
+    name: ""
+    mode: "Python"
+    content: '''
+      class ModelAdmin(admin.ModelAdmin):
+          def save_model(self, request, obj, form, change):
+      
+              if not obj.creator:
+                  # Only set added_by during the first save.
+                  obj.creator = request.user
+                  # print(request.user,obj.creator)
+              super().save_model(request, obj, form, change)
+      
+      # don't forget to hide in admin form if needed
+    '''
+  }
+]
+tags: [
+  "admin"
+]
+isStarred: false
+isTrashed: false

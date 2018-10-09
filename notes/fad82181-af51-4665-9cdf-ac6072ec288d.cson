@@ -1,9 +1,9 @@
 createdAt: "2018-10-04T13:30:50.262Z"
-updatedAt: "2018-10-04T13:31:18.752Z"
+updatedAt: "2018-10-09T13:14:54.839Z"
 type: "SNIPPET_NOTE"
 folder: "24cd1938f66bd85d060d"
-title: "Extend usermodel with profile"
-description: "Extend usermodel with profile"
+title: "Model User extend with profile"
+description: "Model User extend with profile"
 snippets: [
   {
     name: "profile.py"
