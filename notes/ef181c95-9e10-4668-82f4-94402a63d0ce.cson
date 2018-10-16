@@ -1,0 +1,44 @@
+createdAt: "2018-10-16T11:05:57.017Z"
+updatedAt: "2018-10-16T11:07:06.601Z"
+type: "SNIPPET_NOTE"
+folder: "3712968176bb52103079"
+title: "Simple config to serve static"
+description: "Simple config to serve static"
+snippets: [
+  {
+    name: "nginx.conf"
+    mode: "Nginx"
+    content: '''
+      worker_processes 1;
+      
+      events { worker_connections 1024; }
+      
+      http {
+          include    mime.types;
+          sendfile on;
+          server {
+              root /usr/share/nginx/html/;
+              index index.html;
+              server_name localhost;
+              listen 90;
+          }
+      }
+    '''
+  }
+  {
+    name: "Dockerfile"
+    mode: "Dockerfile"
+    content: '''
+      FROM nginx
+      
+      RUN rm /etc/nginx/conf.d/default.conf
+      
+      COPY staticfiles /usr/share/nginx/html/
+      
+      COPY nginx.conf /etc/nginx
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false
