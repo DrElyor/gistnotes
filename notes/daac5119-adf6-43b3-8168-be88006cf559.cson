@@ -1,0 +1,33 @@
+createdAt: "2018-10-17T14:14:08.635Z"
+updatedAt: "2018-10-17T14:14:38.487Z"
+type: "SNIPPET_NOTE"
+folder: "43ecb1d089b690773bbe"
+title: "Scan bucket"
+description: "Scan bucket"
+snippets: [
+  {
+    name: ""
+    mode: "Python"
+    content: '''
+       s3 = session.resource('s3')
+        bucket=s3.Bucket(BUCKET_NAME)
+        exists=False
+        try:
+            s3.meta.client.head_bucket(Bucket=BUCKET_NAME)
+            exists=True
+        except botocore.exceptions.ClientError as e:
+            # If a client error is thrown, then check that it was a 404 error.
+            # If it was a 404 error, then the bucket does not exist.
+            error_code = e.response['Error']['Code']
+            if error_code == '404':
+                exists = False
+        print("Bucket exists",exists)
+        if exists:
+            for key in bucket.objects.all():
+                print(key.key)
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

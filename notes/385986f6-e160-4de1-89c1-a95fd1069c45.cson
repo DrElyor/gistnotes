@@ -1,0 +1,27 @@
+createdAt: "2018-10-17T14:13:01.871Z"
+updatedAt: "2018-10-17T14:14:44.925Z"
+type: "SNIPPET_NOTE"
+folder: "43ecb1d089b690773bbe"
+title: "Download File"
+description: "Download File"
+snippets: [
+  {
+    name: ""
+    mode: "Python"
+    content: '''
+       s3 = session.resource('s3')
+        bucket=s3.Bucket(BUCKET_NAME)
+        try:
+            bucket.download_file(KEY, 'my_local_image.jpg')
+        except botocore.exceptions.ClientError as e:
+            if e.response['Error']['Code'] == "404":
+                print("The object does not exist.")
+            else:
+                raise
+      
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false
