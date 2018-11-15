@@ -1,0 +1,31 @@
+createdAt: "2018-10-19T05:51:49.384Z"
+updatedAt: "2018-10-19T05:52:16.320Z"
+type: "SNIPPET_NOTE"
+folder: "616a8fb20af4fb61f148"
+title: "django app"
+description: '''
+  django app
+  
+'''
+snippets: [
+  {
+    name: ""
+    mode: "Dockerfile"
+    content: '''
+      FROM python:3.6-slim
+      
+      COPY requirements.txt /
+      
+      RUN pip install -r /requirements.txt
+      
+      COPY . /app
+      WORKDIR /app
+      
+      # CMD ["gunicorn", "--bind=0.0.0.0:8000","samai_assets_management.wsgi"]
+      # CMD ["python", "manage.py", "runserver","0:8000"]
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

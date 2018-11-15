@@ -1,0 +1,121 @@
+createdAt: "2018-11-15T12:24:43.300Z"
+updatedAt: "2018-11-15T12:25:20.334Z"
+type: "SNIPPET_NOTE"
+folder: "c3b3b68a48cc12e650fc"
+title: "Bokeh Distribution Graph"
+description: "Bokeh Distribution Graph"
+snippets: [
+  {
+    name: ""
+    mode: "text"
+    content: '''
+      import numpy as np
+      from bokeh.io import show
+      from bokeh.layouts import column,gridplot
+      from bokeh.models import ColumnDataSource, RangeTool,Tool,String
+      from bokeh.plotting import figure
+      from bokeh.models.ranges import Range1d
+      import math
+      import os
+      import numpy as np
+      from bokeh.plotting import figure, show, output_notebook
+      from IPython.display import display, HTML
+      from bokeh.embed import components
+      
+      import cv2
+      from bokeh.models import ColumnDataSource, HoverTool
+      
+      from PIL import Image
+      from bokeh.plotting import figure, show
+      output_notebook()
+      
+      im = Image.open("1.png")
+      im = im.convert("RGBA")
+      # uncomment to compare
+      imarray = np.array(im)
+      imarray = imarray[::-1]
+      
+      
+      
+      JS_CODE_SAVE = """
+      import * as p from "core/properties"
+      import {ActionTool, ActionToolView} from "models/tools/actions/action_tool"
+      
+      export class NewSaveView extends ActionToolView
+      
+        # this is executed when the button is clicked
+        doit: () ->
+          @plot_view.save(@model.save_name)
+      
+      export class CustomSaveTool extends ActionTool
+        default_view: NewSaveView
+        type: "CustomSaveTool"
+      
+        tool_name: "Save"
+        icon: "bk-tool-icon-save"
+      
+        @define { save_name: [ p.String ] } """
+      
+      class NewSave(Tool):
+          """
+          Save a plot with a custom name.
+          Usage: CustomSaveTool(save_name = name)
+          """
+          __implementation__ = JS_CODE_SAVE
+          save_name = String()
+      
+      def create_distributions_plot(img):
+          width=img.shape[1]
+          height=img.shape[0]
+          v_mean=np.array(img).mean(axis=1)
+          h_mean=np.array(img).mean(axis=0)
+          p = figure(plot_height=height, plot_width=width, tools="crosshair,wheel_zoom,zoom_in,zoom_out,reset,save", toolbar_location="below",
+              x_axis_location="above",background_fill_color="#efefef", x_range=(0,width),y_range=(0,height))
+          p.image(image=[img], x=0, y=0, dw=width, dh=height, palette="Inferno256")
+          
+          
+          p.add_tools(
+                          HoverTool(
+                              tooltips=[
+                                  ("(x,y)", "($x, $y)"),
+                                  ("value", "@image"),
+                              ],
+                              formatters={
+                                  "x": "printf",  # use 'datetime' formatter for 'date' field
+                                  "y": "printf",  # use 'printf' formatter for 'adj close' field
+                                  # use default 'numeral' formatter for other fields
+                              },
+                          )
+                      )
+          #p.add_tools(NewSave(save_name = 'src_img.png'))
+      
+          select1 = figure(title="Horizontal mean distribution",
+                          plot_height=int(height/2), plot_width=width, 
+                          background_fill_color="#efefef")
+          range_rool = RangeTool(x_range=p.x_range)
+          select1.line(np.arange(width), h_mean)
+          select1.add_tools(range_rool)
+          select1.add_tools(NewSave(save_name = 'hor_dist'))
+          select1.toolbar.active_multi = range_rool
+      
+          select2 = figure(title="Vertical mean distribution",
+                          plot_height=height, plot_width=int(width/2), 
+                          background_fill_color="#efefef",y_axis_location="right")
+          #select2.xaxis.major_label_orientation = np.pi/4
+          range_rool2 = RangeTool(y_range=p.y_range)
+          select2.line(v_mean,np.arange(height))
+          select2.add_tools(range_rool2)
+          select2.add_tools(NewSave(save_name = 'vert_dist'))
+          select2.toolbar.active_multi = range_rool2
+          
+          grid = gridplot([[p, select2], [select1,None]])
+          return grid,p,select1,select2
+      
+      grid,p,select1,select2=create_distributions_plot(imarray[:,:,0])
+      show(grid)
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

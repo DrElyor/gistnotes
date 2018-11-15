@@ -1,0 +1,43 @@
+createdAt: "2018-10-19T05:53:42.212Z"
+updatedAt: "2018-10-19T05:54:11.169Z"
+type: "SNIPPET_NOTE"
+folder: "616a8fb20af4fb61f148"
+title: "Docker simple nginx"
+description: "Docker simple nginx"
+snippets: [
+  {
+    name: "Dockerfile"
+    mode: "Dockerfile"
+    content: '''
+      FROM nginx
+      
+      RUN rm /etc/nginx/conf.d/default.conf
+      
+      COPY /dist/spa-mat/ /usr/share/nginx/html/
+      
+      COPY nginx.conf /etc/nginx
+    '''
+  }
+  {
+    name: "nginx.conf"
+    mode: "Nginx"
+    content: '''
+      worker_processes 1;
+      
+      events { worker_connections 1024; }
+      
+      http {
+          include    mime.types;
+          sendfile on;
+          server {
+              root /usr/share/nginx/html/;
+              index index.html;
+              server_name localhost;
+              listen 90;
+          }
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

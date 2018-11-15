@@ -1,0 +1,39 @@
+createdAt: "2018-10-25T05:51:45.326Z"
+updatedAt: "2018-10-25T05:53:52.167Z"
+type: "SNIPPET_NOTE"
+folder: "24cd1938f66bd85d060d"
+title: "Custom date admin filter"
+description: "Custom date admin filter"
+snippets: [
+  {
+    name: "custom_date_filter.py"
+    mode: "Python"
+    content: '''
+      class CustomDateTimeFilter(DateFieldListFilter):
+          def __init__(self, *args, **kwargs):
+              super(CustomDateTimeFilter, self).__init__(*args, **kwargs)
+      
+              now = timezone.now()
+              # When time zone support is enabled, convert "now" to the user's time
+              # zone so Django's definition of "Today" matches what the user expects.
+              if timezone.is_aware(now):
+                  now = timezone.localtime(now)
+      
+              today = now.date()
+              links=list(self.links)
+              links.insert(1,(('Yesterday'), {
+                      self.lookup_kwarg_since: str(today - datetime.timedelta(days=1)),
+                      self.lookup_kwarg_until: str(today ),
+                  }))
+              self.links = links
+              
+      class ModelAdmin(admin.ModelAdmin):
+          list_filter = (
+              ('date', CustomDateTimeFilter),
+          )
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

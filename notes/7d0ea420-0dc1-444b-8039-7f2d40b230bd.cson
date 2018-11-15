@@ -1,0 +1,89 @@
+createdAt: "2018-10-19T05:52:22.235Z"
+updatedAt: "2018-10-19T05:53:11.472Z"
+type: "SNIPPET_NOTE"
+folder: "616a8fb20af4fb61f148"
+title: "django compose"
+description: '''
+  django compose
+  
+'''
+snippets: [
+  {
+    name: "docker-compose.yml"
+    mode: "YAML"
+    content: '''
+      
+      version: '2'  
+      services:  
+        
+        web:
+          # build: .
+          image: samai-assets:latest
+          container_name: dg01
+          command: python manage.py runserver 0:8000
+          # command: gunicorn samai_assets_management.wsgi -b 0.0.0.0:8000
+      
+          links:
+            - redis
+          volumes:
+            - .:/app
+          ports:
+           - '8008:8000'
+      
+        redis:
+          image: redis:latest
+          container_name: rd01
+      
+        celery:
+          # build: .
+          image: samai-assets:latest
+          container_name: cl01
+          command: celery -A samai_assets_management.celery worker -l info 
+          volumes:
+            - .:/app
+          links:
+            - redis
+      
+        beat:
+          # build: .
+          image: samai-assets:latest
+          container_name: bt01
+          command: celery -A samai_assets_management.celery beat --scheduler django_celery_beat.schedulers:DatabaseScheduler
+      
+          volumes:
+            - .:/app
+          links:
+            - redis
+      
+        flower:
+          # # build: .
+          image: samai-assets:latest
+          container_name: fl01
+          command: flower -A samai_assets_management.celery 
+          volumes:
+            - .:/app
+          ports:
+            - '5555:5555'
+          links:
+            - redis
+            - celery
+      
+        # nginx:
+        #   image: nginx:latest
+        #   container_name: ng01
+        #   ports:
+        #     - "80:80"
+        #   volumes:
+        #     - .:/app
+        #     - ./nginx:/etc/nginx/conf.d
+        #   depends_on:
+        #     - web
+      
+      
+      
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false
