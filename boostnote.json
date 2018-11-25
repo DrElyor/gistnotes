@@ -29,6 +29,11 @@
       "key": "616a8fb20af4fb61f148",
       "color": "#FF8E00",
       "name": "Docker"
+    },
+    {
+      "key": "3dd3478790e66eddc904",
+      "color": "#E8D252",
+      "name": "Kafka"
     }
   ],
   "version": "1.0"
