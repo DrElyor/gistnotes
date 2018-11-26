@@ -34,6 +34,9 @@
       "key": "3dd3478790e66eddc904",
       "color": "#E8D252",
       "name": "Kafka"
+      "key": "43ecb1d089b690773bbe",
+      "color": "#E10051",
+      "name": "Boto3"
     }
   ],
   "version": "1.0"
