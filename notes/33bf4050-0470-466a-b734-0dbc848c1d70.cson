@@ -1,0 +1,75 @@
+createdAt: "2018-11-26T08:43:38.180Z"
+updatedAt: "2018-11-26T08:44:09.178Z"
+type: "SNIPPET_NOTE"
+folder: "37859a490b6d0f1fcbd6"
+title: "dataframe to sqlalchemy class"
+description: '''
+  dataframe to sqlalchemy class
+  
+'''
+snippets: [
+  {
+    name: ""
+    mode: "Python"
+    content: '''
+      def get_sqla_type(el):
+          if isinstance(el,int):
+              return 'Integer'
+          elif isinstance(el,float):
+              return 'Numeric'
+          elif isinstance(el,str):
+              return 'String'
+          elif isinstance(el,datetime):
+              return 'DateTime'
+          
+          else:
+              return 'String'
+            
+      def cvtNonAlphaNumeric(el):
+          
+          if el.isalnum():
+              return el
+          else:
+              return "_"
+          
+      def pandas2sqlalchemy(dataframe,class_name,table,schema,integer_index=True):
+          df=dataframe.copy()
+          
+          cols=df.columns
+          
+          class_str=''
+          new_line='class {}(Base):'.format(class_name)
+          class_str += new_line
+          print(new_line)
+          if table:
+              new_line="\\t__tablename__ = '{}'".format(table)
+              class_str += new_line
+              print(new_line)
+          if schema:
+              new_line="""\\t__table_args__ = { 'schema' : '"""+schema+"""' } """
+              class_str += new_line
+              print(new_line)
+          if integer_index:   
+              new_line="\\tindex = Column(Integer, primary_key=True)"
+              class_str += new_line
+              print(new_line)
+          
+          
+          
+          for p in cols:
+              
+              valid_col=''.join([cvtNonAlphaNumeric(el) for el in p ]).rstrip("_").replace("__","_")
+              new_line="""\\t{} = Column('{}', {})""".format(valid_col,valid_col,get_sqla_type(df[p].iloc[0]))
+              class_str+=new_line
+              print(new_line)
+              #print(p,df[p].dtype,type(df[p].iloc[0]),get_sqla_type(df[p].iloc[0]))
+              
+          return class_str
+              
+      class_code=pandas2sqlalchemy(df,'class_name','table_name','schema_name')
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

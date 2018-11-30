@@ -1,0 +1,73 @@
+createdAt: "2018-11-30T09:04:30.075Z"
+updatedAt: "2018-11-30T09:04:52.496Z"
+type: "SNIPPET_NOTE"
+folder: "3106e1fce006b2586fcd"
+title: "Apply watermark on image"
+description: '''
+  Apply watermark on image
+  
+'''
+snippets: [
+  {
+    name: "create_watermark.py"
+    mode: "Python"
+    content: '''
+      
+      
+      import cv2
+      import click
+      import numpy as np
+      
+      @click.command()
+      @click.option('--src',"-s", help='Path to input image.')
+      @click.option('--watermark',"-w", help='Watermark to apply.')
+      @click.option('--output','-o', help='Path for output image')
+      @click.option('--alpha','-a', default=0.5, help='Alpha level')
+      @click.option('--rotation','-r', default=0, help='Euler rotation angle')
+      @click.option('--mode','-m', default="bottom",type=click.Choice(['bottom', 'center','diag','wall','cross']),help="Choose a watermarking mode")
+      def process(src,watermark,output,alpha,rotation,mode):
+          """Simple program apply a watermark on an image."""
+          watermark = cv2.imread(watermark, cv2.IMREAD_UNCHANGED)
+          (wH, wW) = watermark.shape[:2]
+      
+          M = cv2.getRotationMatrix2D((int(wH/2),int(wW/2)),rotation,1)
+          watermark = cv2.warpAffine(watermark,M,(wH,wW),watermark,cv2.INTER_LINEAR,cv2.BORDER_CONSTANT,(255,255,255))
+          (wH, wW) = watermark.shape[:2]
+      
+          image_src = cv2.imread(src)
+          (h, w) = image_src.shape[:2]
+          overlay = image_src.copy()
+          marked_image = image_src.copy()
+      
+          if mode=="bottom":
+              overlay[h - wH - 10:h - 10, w - wW - 10:w - 10] = watermark
+          if mode=="cross":
+              overlay[h - wH - 10:h - 10, w - wW - 10:w - 10] = watermark
+              overlay[10:wH+10, w - wW - 10:w - 10] = watermark
+              overlay[10: wH + 10, 10: 10+wW] = watermark
+              overlay[h- 10 -wH: h - 10, 10: 10+wW] = watermark
+              if h % 2 ==0:
+                  overlay[int(h/2) - int(wH/2) :int(h/2) + int(wH/2) , int(w/2) - int(wW/2) :int(w/2) + int(wW/2)] = watermark
+              else:
+                  overlay[int(h/2) - int(wH/2) :int(h/2) + int(wH/2)+1 , int(w/2) - int(wW/2) :int(w/2) + int(wW/2)+1] = watermark 
+          elif mode=="center":
+              if h % 2 ==0:
+                  overlay[int(h/2) - int(wH/2) :int(h/2) + int(wH/2) , int(w/2) - int(wW/2) :int(w/2) + int(wW/2)] = watermark
+              else:
+                  overlay[int(h/2) - int(wH/2) :int(h/2) + int(wH/2)+1 , int(w/2) - int(wW/2) :int(w/2) + int(wW/2)+1] = watermark 
+              
+              
+          cv2.addWeighted(overlay, alpha, marked_image, 1 - alpha, 0, marked_image)
+          cv2.imwrite(output, marked_image)
+      
+      
+      
+      
+      if __name__ == '__main__':
+          process()
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false

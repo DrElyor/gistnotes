@@ -1,42 +1,49 @@
 {
   "folders": [
     {
-      "key": "c3b3b68a48cc12e650fc",
-      "color": "#1278BD",
-      "name": "Default"
-    },
-    {
-      "key": "37859a490b6d0f1fcbd6",
-      "color": "#B013A4",
-      "name": "python_utils"
-    },
-    {
-      "key": "66e912a8a3ebb823eaf4",
-      "color": "#E8D252",
-      "name": "server_management"
-    },
-    {
       "key": "24cd1938f66bd85d060d",
-      "color": "#B013A4",
+      "color": "#E10051",
       "name": "Django"
     },
     {
-      "key": "3712968176bb52103079",
-      "color": "#E8D252",
-      "name": "nginx"
-    },
-    {
-      "key": "616a8fb20af4fb61f148",
+      "key": "c3b3b68a48cc12e650fc",
       "color": "#FF8E00",
-      "name": "Docker"
+      "name": "Bokeh"
     },
     {
       "key": "3dd3478790e66eddc904",
       "color": "#E8D252",
       "name": "Kafka"
+    },
+    {
+      "key": "616a8fb20af4fb61f148",
+      "color": "#3FD941",
+      "name": "Docker"
+    },
+    {
       "key": "43ecb1d089b690773bbe",
+      "color": "#30D5C8",
+      "name": "S3"
+    },
+    {
+      "key": "3712968176bb52103079",
+      "color": "#2BA5F7",
+      "name": "NGINX"
+    },
+    {
+      "key": "37859a490b6d0f1fcbd6",
+      "color": "#B013A4",
+      "name": "Python"
+    },
+    {
+      "key": "66e912a8a3ebb823eaf4",
       "color": "#E10051",
-      "name": "Boto3"
+      "name": "Linux"
+    },
+    {
+      "key": "3106e1fce006b2586fcd",
+      "color": "#B013A4",
+      "name": "IMP"
     }
   ],
   "version": "1.0"
