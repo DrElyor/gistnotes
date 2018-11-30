@@ -1,0 +1,23 @@
+createdAt: "2018-11-30T09:25:26.285Z"
+updatedAt: "2018-11-30T09:27:26.469Z"
+type: "SNIPPET_NOTE"
+folder: "24cd1938f66bd85d060d"
+title: "ModelAdmin filter object based on user"
+description: "ModelAdmin filter object based on user"
+snippets: [
+  {
+    name: ""
+    mode: "Python"
+    content: '''
+      # to add in ModelAdmin class
+      # replace model by effective model
+      def queryset(self, request):
+          if request.user.is_superuser:
+              return Model.objects.all()
+          return Model.objects.filter(author=request.user)
+    '''
+  }
+]
+tags: []
+isStarred: false
+isTrashed: false
